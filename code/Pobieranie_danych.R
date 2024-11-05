@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 # wgranie bibliotek
 
+=======
+# granie bibliotek
+>>>>>>> e01b9067f339d2567b23e8080261432d3bc5e219
 require.packages <- c("tidyverse", "quantmod", "eurostat", "rvest", "lubridate")
 sapply(require.packages, require, character.only = TRUE) 
 
 start.date <- "2019-01-31"  # EXCLUDING
+<<<<<<< HEAD
 end.date <- "2024-09-30"    # INCLUDING
 
 #  RFR - 10 letnie obligacje skarbowe
@@ -73,3 +78,6 @@ GDP <- get_eurostat("tec00115", filters = list(geo = "PL")) %>%
   select(time, values) %>%
   rename("PKB" = "values")
 
+=======
+end.date <- "2024-09-30"    # INCLUDING
+>>>>>>> e01b9067f339d2567b23e8080261432d3bc5e219
