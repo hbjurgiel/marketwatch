@@ -1,14 +1,12 @@
-<<<<<<< HEAD
 # wgranie bibliotek
 
-=======
-# granie bibliotek
->>>>>>> e01b9067f339d2567b23e8080261432d3bc5e219
-require.packages <- c("tidyverse", "quantmod", "eurostat", "rvest", "lubridate")
+install.packages("eurostat")
+
+require.packages <- c("tidyverse", "quantmod", "eurostat", "rvest", "lubridate","PerformanceAnalytics")
+
 sapply(require.packages, require, character.only = TRUE) 
 
 start.date <- "2019-01-31"  # EXCLUDING
-<<<<<<< HEAD
 end.date <- "2024-09-30"    # INCLUDING
 
 #  RFR - 10 letnie obligacje skarbowe
@@ -63,12 +61,11 @@ ggplot(interest_df, aes(x = Date, y = INT_3M)) +
   theme_minimal()
 
 # Stopa bezrobocia
-Unemployment <- get_eurostat("une_rt_m", filters = list(geo = "PL", age = "TOTAL", sex = "T")) %>%
+Unemployment <- get_eurostat("une_rt_m", filters = list(geo = "PL", age = "TOTAL", sex = "T", unit = "PC_ACT", s_adj = "SA")) %>%
   mutate(time = as.Date(time)) %>%  
   filter(time > start.date & time <= end.date) %>%
   select(time, values) %>%
   rename("Stopa_bezrobocia" = "values")
-
 
 # PKB
 
@@ -78,6 +75,31 @@ GDP <- get_eurostat("tec00115", filters = list(geo = "PL")) %>%
   select(time, values) %>%
   rename("PKB" = "values")
 
-=======
-end.date <- "2024-09-30"    # INCLUDING
->>>>>>> e01b9067f339d2567b23e8080261432d3bc5e219
+
+# Kurs walutowy PLN/USD
+getFX("PLN/USD", from = start.date, to = end.date)
+
+exchange_rate <- get("PLNUSD") %>%
+  to.monthly(OHLC = FALSE)
+
+# Indeksy giełdowe
+
+# WIG20; SPX; DAX i inne ogólne światowe (MAX5)
+
+getSymbols("SPY", from = "2020-01-01") # SPX
+getSymbols("^GDAXI", from = "2020-01-01") # DAX
+getSymbols("^FTSE", from = "2020-01-01") # FTSE 100
+getSymbols("^STOXX", from = "2020-01-01") # STOXX Europe 600
+getSymbols("GLD", from = "2020-01-01") # Złoto
+getSymbols("WIG20.WA", from = "2020-01-01") # WIG20
+
+
+
+
+
+
+
+
+
+
+
